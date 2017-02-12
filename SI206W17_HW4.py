@@ -14,9 +14,28 @@ from bs4 import BeautifulSoup
 
 ## Write the Python code to do so here.
 
-target_url = 'http://www.nytimes.com'
-r = requests.get(target_url)
+base_url = 'http://www.nytimes.com'
+r = requests.get(base_url)
 soup = BeautifulSoup(r.text)
+
+# target_url = 'http://www.nytimes.com'
+# html_text = requests.get(target_url).text
+# fileref = open("nytimes_data","w")
+# fileref.write(html_text)
+# soup = BeautifulSoup(html_text)
+
+
+
+# f = open('pathXXXX', 'r') # open the files
+# data = f.read() # read the file
+# f.write(data) # write the file
+# f. close() # close the file
+
+# soup.find_all("title")
+# soup.find_all(id = 'line2')
+# soup.find_all("a", class_="sister")
+# soup.find_all(attrs={"data-foo": "value"})
+# soup.select("p.strikeout.body")
 
 
 
@@ -45,6 +64,18 @@ soup = BeautifulSoup(r.text)
 ## HINT: Remember that you'll need to open the file you created in Part 1, read the contets into one big string, and make a BeautifulSoup object out of that string!
 ## NOTE that the provided link does not include saving the online data in a file as part of the process. But it still provides very useful hints/tricks about how to look for and identify the headlines on the NY Times page.
 
+nytimes_headlines = []
+for story_heading in soup.find_all(class_="story-heading"): 
+    if story_heading.a: 
+    	nytimes_headlines.append(story_heading.a.text.replace("\n", " ").strip())
+        # print(story_heading.a.text.replace("\n", " ").strip())
+    else: 
+    	nytimes_headlines.append(story_heading.contents[0].strip())
+        # print(story_heading.contents[0].strip())
+nytimes_headlines = nytimes_headlines[:10]
+print ("i am about to PRINT THE LIST NOW")
+print (len(nytimes_headlines))
+print (nytimes_headlines)
 
 
 
@@ -71,6 +102,10 @@ htmldoc = response.text
 soup = BeautifulSoup(htmldoc,"html.parser")
 people = soup.find_all("div",{"class":"views-row"})
 umsi_titles = {}
+
+
+
+
 
 ## It may be helpful to translate the following from English to code:
 
