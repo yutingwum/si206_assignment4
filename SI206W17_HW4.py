@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 
 ## SI 206 - W17 - HW4
-## COMMENT WITH:
-## Your section day/time:
-## Any names of people you worked with on this assignment:
+## COMMENT WITH: Yuting Wu
+## Your section day/time: Thursday 6 -8
+## Any names of people you worked with on this assignment:Tahmeed, Dong-Lien
 
 #####################
 
@@ -14,15 +14,15 @@ from bs4 import BeautifulSoup
 
 ## Write the Python code to do so here.
 
-base_url = 'http://www.nytimes.com'
-r = requests.get(base_url)
-soup = BeautifulSoup(r.text)
+# base_url = 'http://www.nytimes.com'
+# r = requests.get(base_url)
+# soup = BeautifulSoup(r.text)
 
-# target_url = 'http://www.nytimes.com'
-# html_text = requests.get(target_url).text
-# fileref = open("nytimes_data","w")
-# fileref.write(html_text)
-# soup = BeautifulSoup(html_text)
+target_url = 'http://www.nytimes.com'
+html_text = requests.get(target_url).text
+fileref = open("nytimes_data","w")
+fileref.write(html_text)
+soup = BeautifulSoup(html_text)
 
 
 
@@ -73,9 +73,9 @@ for story_heading in soup.find_all(class_="story-heading"):
     	nytimes_headlines.append(story_heading.contents[0].strip())
         # print(story_heading.contents[0].strip())
 nytimes_headlines = nytimes_headlines[:10]
-print ("i am about to PRINT THE LIST NOW")
-print (len(nytimes_headlines))
-print (nytimes_headlines)
+# print ("i am about to PRINT THE LIST NOW")
+# print (len(nytimes_headlines))
+# print (nytimes_headlines)
 
 
 
@@ -103,9 +103,10 @@ soup = BeautifulSoup(htmldoc,"html.parser")
 people = soup.find_all("div",{"class":"views-row"})
 umsi_titles = {}
 
-
-
-
+for person in people:
+	umsi_titles[person.find("div", {"property":"dc:title"}).h2.text] = person.find("div", {"class":"field field-name-field-person-titles field-type-text field-label-hidden"}, {"class":"field-item even"}).text
+	# {"class":"field field-name-field-person-titles field-type-text field-label-hidden"}
+	# {"class":"field-items"},
 
 ## It may be helpful to translate the following from English to code:
 
@@ -113,9 +114,6 @@ umsi_titles = {}
 ## Find the container that holds the name that belongs to that person (HINT: look for something unique, like a property element...)
 ## Find the container that holds the title that belongs to that person (HINT: a class name)
 ## Grab the text of each of those elements and put them in the dictionary umsi_titles properly
-
-
-
 
 
 
